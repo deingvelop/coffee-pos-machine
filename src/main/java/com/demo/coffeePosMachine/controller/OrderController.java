@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/point")
-public class PointController {
+@RequestMapping("/order")
+public class OrderController {
 }
