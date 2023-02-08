@@ -1,4 +1,4 @@
-package com.demo.coffeePosMachine.domain.point;
+package com.demo.coffeePosMachine.service;
 
 import org.springframework.stereotype.Service;
 

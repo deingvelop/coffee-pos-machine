@@ -1,4 +1,4 @@
-package com.demo.coffeePosMachine.domain.point;
+package com.demo.coffeePosMachine.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
