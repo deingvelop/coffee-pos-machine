@@ -36,15 +36,51 @@
 
 <br />
 
-## 📕 ER 다이어그램     
+## 📕 DB 설계
     
 <details>
-<summary> <b>ERD 바로보기</b> </summary>
+<summary> <b>ERD 보기</b> </summary>
 
 ![image](https://user-images.githubusercontent.com/100582309/217878422-37ec96e0-eb2d-43cb-9857-0aa9ccceec2a.png)
 
 </details>
 
+    
+<details>
+<summary> <b>SQL - DDL </b> </summary>
+
+```SQL
+CREATE TABLE `beverage` (
+    `id` BIGINT(20) NOT NULL auto_increment,
+    `name` varchar(20) NOT NULL,
+    `price` INT(11) NOT NULL,
+    PRIMARY KEY(`id`)
+);
+
+CREATE TABLE `user` (
+    `id` BIGINT(20) NOT NULL auto_increment,
+    `point` BIGINT(20) NOT NULL DEFAULT 0,
+    PRIMARY KEY(`id`)
+);
+
+CREATE TABLE `point_log` (
+    `id` BIGINT(20) NOT NULL auto_increment,
+    `point` BIGINT(20) NOT NULL,
+    `uesr_id` BIGINT(20) NOT NULL,
+    PRIMARY KEY(`id`)
+);
+
+CREATE TABLE `order` (
+    `id` BIGINT(20) NOT NULL auto_increment,
+    `created_at` DATETIME NOT NULL,
+    `user_id` BIGINT(20) NOT NULL,
+    `beverage_id` BIGINT(20) NOT NULL,
+    PRIMARY KEY(`id`),
+    KEY idx_created_at(`created_at`)
+);
+```
+
+</details>
 
 
 
