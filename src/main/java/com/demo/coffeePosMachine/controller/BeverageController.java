@@ -2,6 +2,8 @@ package com.demo.coffeePosMachine.controller;
 
 import com.demo.coffeePosMachine.service.BeverageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,5 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/beverage")
 public class BeverageController {
     private final BeverageService beverageService;
+
+    @GetMapping("/all")
+    public ResponseEntity<?> showAllBeverages() {
+        return ResponseEntity.ok().body(beverageService.showAllBeverages());
+    }
 
 }

@@ -1,7 +1,8 @@
 package com.demo.coffeePosMachine.service;
 
-import org.springframework.stereotype.Service;
+import com.demo.coffeePosMachine.dto.response.AllBeverageResponseDto;
 
-@Service
 public interface BeverageService {
+
+    AllBeverageResponseDto showAllBeverages();
 }
