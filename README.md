@@ -39,7 +39,7 @@
 ## 📕 DB 설계
     
 <details>
-<summary> <b>ERD 보기</b> </summary>
+<summary> <b>ERD</b> </summary>
 
 ![image](https://user-images.githubusercontent.com/100582309/217878422-37ec96e0-eb2d-43cb-9857-0aa9ccceec2a.png)
 
