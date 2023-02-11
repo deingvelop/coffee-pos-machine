@@ -18,4 +18,8 @@ public class BeverageController {
         return ResponseEntity.ok().body(beverageService.showAllBeverages());
     }
 
+    @GetMapping("/favorite")
+    public ResponseEntity<?> showFavoriteBevarages() {
+        return ResponseEntity.ok().body(beverageService.showFavoriteBeverages());
+    }
 }
