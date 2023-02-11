@@ -1,4 +1,4 @@
-package com.demo.coffeePosMachine.domain.point;
+package com.demo.coffeePosMachine.service;
 
 public class PointServiceImpl implements PointService{
 }
