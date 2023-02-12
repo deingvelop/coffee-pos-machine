@@ -16,8 +16,7 @@ import com.demo.coffeePosMachine.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static com.demo.coffeePosMachine.exception.ErrorCode.BEVERAGE_NOT_FOUND;
-import static com.demo.coffeePosMachine.exception.ErrorCode.USER_NOT_FOUND;
+import static com.demo.coffeePosMachine.exception.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -32,32 +31,37 @@ public class OrderServiceImpl implements OrderService{
         Long userId = requestDto.getUserId();
         Long beverageId = requestDto.getBeverageId();
 
-        // 1. OrderLog - 객체 생성 및 DB ORDER 테이블에 저장
+        // 1. Beverage - DB BEVERAGE 테이블 탐색을 통해 음료 가격 가져오기
+        Beverage beverage = beverageRepository.findById(beverageId)
+                .orElseThrow(() -> new BusinessException(BEVERAGE_NOT_FOUND));
+        int beveragePrice = beverage.getPrice();
+
+        // 2. User - 사용자 포인트 잔액 가져오기
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BusinessException(USER_NOT_FOUND));
+
+        // 3. User의 잔액과 Beverage의  Price 비교 후 업데이트 및 DB USER 테이블에 반영
+        if (beveragePrice > user.getPoint()) {
+            throw new BusinessException(OUT_OF_POINT);
+        }
+        user.usePoint(beveragePrice);
+        userRepository.save(user);
+
+        // 4. OrderLog - 객체 생성 및 DB ORDER 테이블에 저장
         OrderLog orderLog = OrderLog.builder()
                 .userId(userId)
                 .beverageId(beverageId)
                 .build();
         orderLogRepository.save(orderLog);
 
-        // 2. Beverage - DB BEVERAGE 테이블 탐색을 통해 음료 가격 가져오기
-        Beverage beverage = beverageRepository.findById(beverageId)
-                .orElseThrow(() -> new BusinessException(BEVERAGE_NOT_FOUND));
-        int beveragePrice = beverage.getPrice();
-
-        // 3. PointLog - 객체 생성 및 DB POINT_LOG 테이블에 저장
+        // 5. PointLog - 객체 생성 및 DB POINT_LOG 테이블에 저장
         PointLog pointLog = PointLog.builder()
                 .userId(userId)
                 .point((long) (-1 * beveragePrice))
                 .build();
         pointLogRepository.save(pointLog);
 
-        // 4. User - 사용자 포인트 상태 업데이트 및 DB USER 테이블에 반영
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new BusinessException(USER_NOT_FOUND));
-        user.usePoint(beveragePrice);
-        userRepository.save(user);
-
-        // 5. Response 생성 및 반환
+        // 6. Response 생성 및 반환
         BeverageDto orderResult = new BeverageDto(beverage);
         PointResponseDto pointResult = new PointResponseDto(user);
 
