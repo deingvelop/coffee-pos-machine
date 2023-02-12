@@ -18,10 +18,11 @@ import java.net.BindException;
 public class GlobalExceptionHandler {
 
     /**
-     * 비즈니스 로직에서 발생하는 에러 Handling
+     * Business Exception Hanlding
+     * 비즈니스 요구사항 예외 처리
      */
     @ExceptionHandler(BusinessException.class)
-    protected ResponseEntity<ErrorResponse> handleBusinessException(final BusinessException e) {
+    public ResponseEntity<ErrorResponse> handleBusinessException(final BusinessException e) {
         log.error("handleBusinessException", e);
         final ErrorCode errorCode = e.getErrorCode();
         final ErrorResponse response = new ErrorResponse(errorCode);
