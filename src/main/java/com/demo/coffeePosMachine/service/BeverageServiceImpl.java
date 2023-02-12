@@ -2,6 +2,7 @@ package com.demo.coffeePosMachine.service;
 
 import com.demo.coffeePosMachine.dto.response.AllBeverageResponseDto;
 import com.demo.coffeePosMachine.dto.response.BeverageDto;
+import com.demo.coffeePosMachine.dto.response.FavoriteBeverageDto;
 import com.demo.coffeePosMachine.dto.response.FavoriteBeverageResponseDto;
 import com.demo.coffeePosMachine.entity.Beverage;
 import com.demo.coffeePosMachine.repository.BeverageRepository;
@@ -27,11 +28,8 @@ public class BeverageServiceImpl implements BeverageService{
 
     @Override
     public FavoriteBeverageResponseDto showFavoriteBeverages() {
-        List<Beverage> data = beverageRepository.findFavorites();
-        List<BeverageDto> response = data.stream()
-                .map(BeverageDto::new)
-                .collect(Collectors.toList());
-        return new FavoriteBeverageResponseDto(response);
+        List<FavoriteBeverageDto> data = beverageRepository.findFavorites();
+        return new FavoriteBeverageResponseDto(data);
     }
 
 }
