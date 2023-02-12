@@ -8,9 +8,9 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class FavoriteBeverageResponseDto {
-    private List<BeverageDto> favorites;
+    private List<FavoriteBeverageDto> favorites;
 
-    public FavoriteBeverageResponseDto(List<BeverageDto> beverages) {
+    public FavoriteBeverageResponseDto(List<FavoriteBeverageDto> beverages) {
         this.favorites = beverages;
     }
 }
