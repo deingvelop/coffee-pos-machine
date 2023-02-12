@@ -7,7 +7,7 @@ import lombok.Getter;
 public class FavoriteBeverageDto {
     private final Long beverageId;
     private final String name;
-    private final Long price;
+    private final int price;
     private final Long count;
 
     public FavoriteBeverageDto(Beverage beverage, Long count) {

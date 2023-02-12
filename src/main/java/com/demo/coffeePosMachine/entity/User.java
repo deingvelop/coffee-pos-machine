@@ -23,4 +23,8 @@ public class User {
     public void changePoint(Long chargingPoint) {
         this.point += chargingPoint;
     }
+
+    public void usePoint(int usingPoint) {
+        this.point -= usingPoint;
+    }
 }

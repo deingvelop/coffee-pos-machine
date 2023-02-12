@@ -7,7 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ErrorCode {
     // Business Exceptions
-    USER_NOT_FOUND("USER_NOT_FOUND", "입력된 사용자 식별값은 등록되지 않은 사용자입니다.", 404),
+    USER_NOT_FOUND("USER_NOT_FOUND", "입력된 식별값은 등록되지 않은 사용자 ID입니다.", 404),
+    BEVERAGE_NOT_FOUND("BEVERAGE_NOT_FOUND", "입력된 식별값은 등록되지 않은 음료 ID입니다.", 404),
 
     // Basic Exceptions
     INVALID_INPUT_VALUE("INVALID_INPUT_VALUE", "유효하지 않은 입력값입니다.", 400),

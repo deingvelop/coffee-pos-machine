@@ -7,7 +7,7 @@ import lombok.Getter;
 public class BeverageDto {
     private final Long beverageId;
     private final String name;
-    private final Long price;
+    private final int price;
 
     public BeverageDto(Beverage beverage) {
         this.beverageId = beverage.getId();

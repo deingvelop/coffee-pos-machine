@@ -5,18 +5,25 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity(name = "order")
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Order {
+public class OrderLog {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
+
+    @Column
+    private Long userId;
+
+    @Column
+    private Long beverageId;
+
+    @Column
+    private LocalDateTime createdAt;
 }
