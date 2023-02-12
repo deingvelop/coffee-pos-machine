@@ -21,5 +21,5 @@ public class Beverage {
     private String name;
 
     @Column
-    private Long price;
+    private int price;
 }

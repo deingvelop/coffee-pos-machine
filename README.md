@@ -41,7 +41,7 @@
 <details>
 <summary> <b>ERD</b> </summary>
 
-![image](https://user-images.githubusercontent.com/100582309/217878422-37ec96e0-eb2d-43cb-9857-0aa9ccceec2a.png)
+![erd - 230212.png](src%2Fmain%2Fresources%2Fstatic%2Ferd%20-%20230212.png)
 
 </details>
 
@@ -70,7 +70,7 @@ CREATE TABLE `point_log` (
     PRIMARY KEY(`id`)
 );
 
-CREATE TABLE `order` (
+CREATE TABLE `orderLog` (
     `id` BIGINT(20) NOT NULL auto_increment,
     `created_at` DATETIME NOT NULL,
     `user_id` BIGINT(20) NOT NULL,
