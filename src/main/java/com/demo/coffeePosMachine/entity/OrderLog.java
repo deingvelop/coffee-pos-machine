@@ -6,14 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
-@Entity(name = "order")
+@Entity(name = "order_log")
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderLog {
+public class OrderLog extends Timestamped {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
@@ -23,7 +22,4 @@ public class OrderLog {
 
     @Column
     private Long beverageId;
-
-    @Column
-    private LocalDateTime createdAt;
 }

@@ -16,8 +16,6 @@ import com.demo.coffeePosMachine.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-
 import static com.demo.coffeePosMachine.exception.ErrorCode.BEVERAGE_NOT_FOUND;
 import static com.demo.coffeePosMachine.exception.ErrorCode.USER_NOT_FOUND;
 
@@ -38,7 +36,6 @@ public class OrderServiceImpl implements OrderService{
         OrderLog orderLog = OrderLog.builder()
                 .userId(userId)
                 .beverageId(beverageId)
-                .createdAt(LocalDateTime.now())
                 .build();
         orderLogRepository.save(orderLog);
 
