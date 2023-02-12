@@ -2,11 +2,15 @@ package com.demo.coffeePosMachine;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
 
 @SpringBootApplication
-//@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
-public class CoffeePosMachineApplication {
+public class CoffeePosMachineApplication extends SpringBootServletInitializer {
     public static void main(String[] args) {
-        SpringApplication.run(CoffeePosMachineApplication.class, args);
+        ApplicationContext ctx = SpringApplication.run(CoffeePosMachineApplication.class, args);
+        DispatcherServlet dispatcherServlet = (DispatcherServlet) ctx.getBean("dispatcherServlet");
+        dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
     }
 }
