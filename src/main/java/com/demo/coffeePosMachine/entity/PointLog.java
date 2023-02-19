@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity(name = "point_log")
+@Entity(name = "`point_log`")
 @Getter
 @Builder
 @AllArgsConstructor

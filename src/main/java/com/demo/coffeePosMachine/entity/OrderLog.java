@@ -9,7 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity(name = "order_log")
+@Entity(name = "`order`")
 @Getter
 @Builder
 @AllArgsConstructor
