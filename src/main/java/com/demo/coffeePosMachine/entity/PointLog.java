@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity(name = "`point_log`")
 @Getter
@@ -22,4 +24,8 @@ public class PointLog {
 
     @Column
     private Long point;
+
+    @CreationTimestamp // INSERT 시 자동으로 값을 채워줌
+    @Column
+    private LocalDateTime createdAt = LocalDateTime.now();
 }
