@@ -9,6 +9,7 @@ import com.demo.coffeePosMachine.repository.BeverageRepository;
 import com.demo.coffeePosMachine.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +21,7 @@ public class BeverageServiceImpl implements BeverageService{
     private final OrderRepository orderRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public AllBeverageResponseDto showAllBeverages() {
         List<Beverage> data = beverageRepository.findAll();
         List<BeverageDto> response = data.stream()
@@ -29,6 +31,7 @@ public class BeverageServiceImpl implements BeverageService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public FavoriteBeverageResponseDto showFavoriteBeverages() {
         List<FavoriteBeverageDto> data = orderRepository.findFavorites();
         return new FavoriteBeverageResponseDto(data);

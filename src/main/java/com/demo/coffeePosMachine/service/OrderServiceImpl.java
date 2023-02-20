@@ -16,6 +16,7 @@ import com.demo.coffeePosMachine.repository.UserRepository;
 import com.demo.coffeePosMachine.util.TableValue;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.demo.coffeePosMachine.exception.ErrorCode.*;
 
@@ -28,6 +29,7 @@ public class OrderServiceImpl implements OrderService{
     private final UserRepository userRepository;
 
     @Override
+    @Transactional
     public OrderResponseDto createOrder(OrderRequestDto requestDto) {
         Long userId = requestDto.getUserId();
         Long beverageId = requestDto.getBeverageId();
