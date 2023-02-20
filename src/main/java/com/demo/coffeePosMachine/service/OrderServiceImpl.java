@@ -13,6 +13,7 @@ import com.demo.coffeePosMachine.repository.BeverageRepository;
 import com.demo.coffeePosMachine.repository.OrderRepository;
 import com.demo.coffeePosMachine.repository.PointLogRepository;
 import com.demo.coffeePosMachine.repository.UserRepository;
+import com.demo.coffeePosMachine.util.TableValue;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -59,7 +60,9 @@ public class OrderServiceImpl implements OrderService{
         // 5. PointLog - 객체 생성 및 DB POINT_LOG 테이블에 저장
         PointLog pointLog = PointLog.builder()
                 .userId(userId)
-                .point((long) (-1 * beveragePrice))
+                .point((long) (beveragePrice))
+                .consumeYn(TableValue.Y.getValue())
+                .chargeYn(TableValue.N.getValue())
                 .build();
         pointLogRepository.save(pointLog);
 

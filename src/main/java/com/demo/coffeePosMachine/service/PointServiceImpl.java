@@ -7,6 +7,7 @@ import com.demo.coffeePosMachine.entity.User;
 import com.demo.coffeePosMachine.exception.BusinessException;
 import com.demo.coffeePosMachine.repository.PointLogRepository;
 import com.demo.coffeePosMachine.repository.UserRepository;
+import com.demo.coffeePosMachine.util.TableValue;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +41,8 @@ public class PointServiceImpl implements PointService{
         PointLog pointLog = PointLog.builder()
                 .userId(userId)
                 .point(chargingPoint)
+                .chargeYn(TableValue.Y.getValue())
+                .consumeYn(TableValue.N.getValue())
                 .build();
         pointLogRepository.save(pointLog);
 
