@@ -9,12 +9,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity(name = "order_log")
+@Entity(name = "`order`")
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderLog {
+public class Order {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
@@ -24,6 +24,12 @@ public class OrderLog {
 
     @Column
     private Long beverageId;
+
+    @Column
+    private String beverageName;
+
+    @Column
+    private int beveragePrice;
 
     @CreationTimestamp // INSERT 시 자동으로 값을 채워줌
     @Column

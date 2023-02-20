@@ -6,6 +6,7 @@ import com.demo.coffeePosMachine.dto.response.FavoriteBeverageDto;
 import com.demo.coffeePosMachine.dto.response.FavoriteBeverageResponseDto;
 import com.demo.coffeePosMachine.entity.Beverage;
 import com.demo.coffeePosMachine.repository.BeverageRepository;
+import com.demo.coffeePosMachine.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class BeverageServiceImpl implements BeverageService{
     private final BeverageRepository beverageRepository;
+    private final OrderRepository orderRepository;
 
     @Override
     public AllBeverageResponseDto showAllBeverages() {
@@ -28,7 +30,7 @@ public class BeverageServiceImpl implements BeverageService{
 
     @Override
     public FavoriteBeverageResponseDto showFavoriteBeverages() {
-        List<FavoriteBeverageDto> data = beverageRepository.findFavorites();
+        List<FavoriteBeverageDto> data = orderRepository.findFavorites();
         return new FavoriteBeverageResponseDto(data);
     }
 

@@ -5,14 +5,15 @@ import com.demo.coffeePosMachine.dto.response.BeverageDto;
 import com.demo.coffeePosMachine.dto.response.OrderResponseDto;
 import com.demo.coffeePosMachine.dto.response.PointResponseDto;
 import com.demo.coffeePosMachine.entity.Beverage;
-import com.demo.coffeePosMachine.entity.OrderLog;
+import com.demo.coffeePosMachine.entity.Order;
 import com.demo.coffeePosMachine.entity.PointLog;
 import com.demo.coffeePosMachine.entity.User;
 import com.demo.coffeePosMachine.exception.BusinessException;
 import com.demo.coffeePosMachine.repository.BeverageRepository;
-import com.demo.coffeePosMachine.repository.OrderLogRepository;
+import com.demo.coffeePosMachine.repository.OrderRepository;
 import com.demo.coffeePosMachine.repository.PointLogRepository;
 import com.demo.coffeePosMachine.repository.UserRepository;
+import com.demo.coffeePosMachine.util.TableValue;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ import static com.demo.coffeePosMachine.exception.ErrorCode.*;
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService{
-    private final OrderLogRepository orderLogRepository;
+    private final OrderRepository orderRepository;
     private final BeverageRepository beverageRepository;
     private final PointLogRepository pointLogRepository;
     private final UserRepository userRepository;
@@ -48,16 +49,20 @@ public class OrderServiceImpl implements OrderService{
         userRepository.save(user);
 
         // 4. OrderLog - 객체 생성 및 DB ORDER 테이블에 저장
-        OrderLog orderLog = OrderLog.builder()
+        Order orderLog = Order.builder()
                 .userId(userId)
                 .beverageId(beverageId)
+                .beverageName(beverage.getName())
+                .beveragePrice(beveragePrice)
                 .build();
-        orderLogRepository.save(orderLog);
+        orderRepository.save(orderLog);
 
         // 5. PointLog - 객체 생성 및 DB POINT_LOG 테이블에 저장
         PointLog pointLog = PointLog.builder()
                 .userId(userId)
-                .point((long) (-1 * beveragePrice))
+                .point((long) (beveragePrice))
+                .consumeYn(TableValue.Y.getValue())
+                .chargeYn(TableValue.N.getValue())
                 .build();
         pointLogRepository.save(pointLog);
 
