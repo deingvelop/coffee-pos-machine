@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderLog {
+public class Order {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
@@ -24,6 +24,12 @@ public class OrderLog {
 
     @Column
     private Long beverageId;
+
+    @Column
+    private String beverageName;
+
+    @Column
+    private int beveragePrice;
 
     @CreationTimestamp // INSERT 시 자동으로 값을 채워줌
     @Column
