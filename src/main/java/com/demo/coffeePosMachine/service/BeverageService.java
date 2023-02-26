@@ -1,11 +1,15 @@
 package com.demo.coffeePosMachine.service;
 
-import com.demo.coffeePosMachine.dto.response.AllBeverageResponseDto;
-import com.demo.coffeePosMachine.dto.response.FavoriteBeverageResponseDto;
+import com.demo.coffeePosMachine.dto.BeverageDto;
+import com.demo.coffeePosMachine.dto.response.FavoriteBeverageDto;
+
+import java.util.List;
 
 public interface BeverageService {
 
-    AllBeverageResponseDto showAllBeverages();
+    List<BeverageDto> showAllBeverages();
 
-    FavoriteBeverageResponseDto showFavoriteBeverages();
+    List<FavoriteBeverageDto> showFavoriteBeverages();
+
+    BeverageDto getBeverage(Long beverageId);
 }

@@ -1,5 +1,6 @@
 package com.demo.coffeePosMachine.entity;
 
+import com.demo.coffeePosMachine.dto.BeverageDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,5 +22,9 @@ public class Beverage {
     private String name;
 
     @Column
-    private int price;
+    private Long price;
+
+    public BeverageDto toDto() {
+        return new BeverageDto(id, name, price);
+    }
 }

@@ -1,7 +1,6 @@
 package com.demo.coffeePosMachine.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -11,7 +10,6 @@ import java.time.LocalDateTime;
 
 @Entity(name = "`point_log`")
 @Getter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class PointLog {
@@ -25,13 +23,16 @@ public class PointLog {
     @Column
     private Long point;
 
-    @Column(length = 1)
-    private String consumeYn;
-
-    @Column(length = 1)
-    private String chargeYn;
+    @Column
+    private PointLogType type;
 
     @CreationTimestamp // INSERT 시 자동으로 값을 채워줌
     @Column
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    public PointLog(Long userId, Long point, PointLogType type) {
+        this.userId = userId;
+        this.point = point;
+        this.type = type;
+    }
 }
