@@ -1,10 +1,9 @@
 package com.demo.coffeePosMachine.service;
 
-import com.demo.coffeePosMachine.dto.response.AllBeverageResponseDto;
-import com.demo.coffeePosMachine.dto.response.BeverageDto;
+import com.demo.coffeePosMachine.dto.BeverageDto;
 import com.demo.coffeePosMachine.dto.response.FavoriteBeverageDto;
-import com.demo.coffeePosMachine.dto.response.FavoriteBeverageResponseDto;
 import com.demo.coffeePosMachine.entity.Beverage;
+import com.demo.coffeePosMachine.exception.BusinessException;
 import com.demo.coffeePosMachine.repository.BeverageRepository;
 import com.demo.coffeePosMachine.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.demo.coffeePosMachine.exception.ErrorCode.BEVERAGE_NOT_FOUND;
+
 @Service
 @RequiredArgsConstructor
 public class BeverageServiceImpl implements BeverageService{
@@ -22,19 +23,22 @@ public class BeverageServiceImpl implements BeverageService{
 
     @Override
     @Transactional(readOnly = true)
-    public AllBeverageResponseDto showAllBeverages() {
-        List<Beverage> data = beverageRepository.findAll();
-        List<BeverageDto> response = data.stream()
-                .map(BeverageDto::new)
-                .collect(Collectors.toList());
-        return new AllBeverageResponseDto(response);
+    public List<BeverageDto> showAllBeverages() {
+        return beverageRepository.findAll()
+                .stream().map(Beverage::toDto).collect(Collectors.toList());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public FavoriteBeverageResponseDto showFavoriteBeverages() {
-        List<FavoriteBeverageDto> data = orderRepository.findFavorites();
-        return new FavoriteBeverageResponseDto(data);
+    public List<FavoriteBeverageDto> showFavoriteBeverages() {
+        return orderRepository.findFavorites();
+    }
+
+    @Override
+    public BeverageDto getBeverage(Long beverageId) {
+        return beverageRepository.findById(beverageId)
+                .orElseThrow(() -> new BusinessException(BEVERAGE_NOT_FOUND))
+                .toDto();
     }
 
 }

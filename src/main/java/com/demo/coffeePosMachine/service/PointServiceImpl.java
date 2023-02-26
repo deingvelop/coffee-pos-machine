@@ -1,21 +1,24 @@
 package com.demo.coffeePosMachine.service;
 
+import com.demo.coffeePosMachine.dto.BeverageDto;
 import com.demo.coffeePosMachine.dto.request.PointRequestDto;
 import com.demo.coffeePosMachine.dto.response.PointResponseDto;
 import com.demo.coffeePosMachine.entity.PointLog;
+import com.demo.coffeePosMachine.entity.PointLogType;
 import com.demo.coffeePosMachine.entity.User;
 import com.demo.coffeePosMachine.exception.BusinessException;
 import com.demo.coffeePosMachine.repository.PointLogRepository;
 import com.demo.coffeePosMachine.repository.UserRepository;
-import com.demo.coffeePosMachine.util.TableValue;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import static com.demo.coffeePosMachine.exception.ErrorCode.*;
+
+import static com.demo.coffeePosMachine.exception.ErrorCode.INVALID_POINT_VALUE;
+import static com.demo.coffeePosMachine.exception.ErrorCode.USER_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
-public class PointServiceImpl implements PointService{
+public class PointServiceImpl implements PointService {
     private final UserRepository userRepository;
     private final PointLogRepository pointLogRepository;
 
@@ -38,16 +41,17 @@ public class PointServiceImpl implements PointService{
         userRepository.save(user);
 
         // 2. POINT_LOG 테이블 - 포인트 충전 내역 기록
-        PointLog pointLog = PointLog.builder()
-                .userId(userId)
-                .point(chargingPoint)
-                .chargeYn(TableValue.Y.getValue())
-                .consumeYn(TableValue.N.getValue())
-                .build();
+        PointLog pointLog = new PointLog(userId, chargingPoint, PointLogType.CHARGE);
         pointLogRepository.save(pointLog);
 
         // 3. 변화된 포인트 상태를 Response로 반환
         return new PointResponseDto(user.getId(), user.getPoint());
+    }
+
+    @Override
+    public void savePaymentLog(Long userId, BeverageDto beverageDto) {
+        PointLog pointLog = new PointLog (userId, beverageDto.getPrice(), PointLogType.PAY);
+        pointLogRepository.save(pointLog);
     }
 
 }
