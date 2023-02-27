@@ -3,7 +3,6 @@ package com.demo.coffeePosMachine.entity;
 import com.demo.coffeePosMachine.dto.UserDto;
 import com.demo.coffeePosMachine.exception.BusinessException;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,7 +12,6 @@ import static com.demo.coffeePosMachine.exception.ErrorCode.OUT_OF_POINT;
 
 @Entity(name = "`user`")
 @Getter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
