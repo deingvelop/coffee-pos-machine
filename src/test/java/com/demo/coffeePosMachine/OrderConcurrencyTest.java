@@ -41,8 +41,8 @@ class OrderConcurrencyTest {
     }
 
     @Test
-    @DisplayName("동시성_이슈가_발생하는지_테스트")
-    void concurrencyTest() throws ExecutionException, InterruptedException {
+    @DisplayName("동시성_이슈가_발생하는지_테스트_1")
+    void concurrencyTest_supplyAsync() throws ExecutionException, InterruptedException {
         // given
         OrderRequestDto request = new OrderRequestDto(1L, 1L);
 
@@ -50,6 +50,23 @@ class OrderConcurrencyTest {
         CompletableFuture<?> order1 = CompletableFuture.supplyAsync(() -> orderService.createOrder(request));
         CompletableFuture<?> order2 = CompletableFuture.supplyAsync(() -> orderService.createOrder(request));
         CompletableFuture<?> order3 = CompletableFuture.supplyAsync(() -> orderService.createOrder(request));
+        CompletableFuture.allOf(order1, order2, order3).get();
+
+        // then
+        assert userRepository.findById(1L).get().getPoint() != 400;
+        assert userRepository.findById(1L).get().getPoint() == 5200;
+    }
+
+    @Test
+    @DisplayName("동시성_이슈가_발생하는지_테스트_2")
+    void concurrencyTest_runAsync() throws ExecutionException, InterruptedException {
+        // given
+        OrderRequestDto request = new OrderRequestDto(1L, 1L);
+
+        // when
+        CompletableFuture<?> order1 = CompletableFuture.runAsync(() -> orderService.createOrder(request));
+        CompletableFuture<?> order2 = CompletableFuture.runAsync(() -> orderService.createOrder(request));
+        CompletableFuture<?> order3 = CompletableFuture.runAsync(() -> orderService.createOrder(request));
         CompletableFuture.allOf(order1, order2, order3).get();
 
         // then
