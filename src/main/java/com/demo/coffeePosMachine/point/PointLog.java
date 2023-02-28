@@ -8,7 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity(name = "`point_log`")
+@Entity(name = "point_log")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
