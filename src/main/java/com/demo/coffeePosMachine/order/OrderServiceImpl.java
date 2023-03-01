@@ -22,10 +22,25 @@ public class OrderServiceImpl implements OrderService {
         // 1. 음료 주문하기
         BeverageDto beverage = beverageService.getBeverage(requestDto.getBeverageId());
         Order order = orderRepository.save(new Order(requestDto, beverage));
-        // 2. 포인트 반영 및 로그 남기기
+        // 2. order 로그 남기기
         userService.payForOrder(requestDto.getUserId(), order.getBeveragePrice());
-        pointService.savePaymentLog(requestDto.getUserId(), beverage);;
-        // 3. 응답 리턴하기
+        // 3. 포인트 반영 및 로그 남기기
+        pointService.savePaymentLog(requestDto.getUserId(), beverage);
+        // 4. 응답 리턴하기
+        return order.toResponseDto();
+    }
+
+    @Override
+    @Transactional
+    public OrderResponseDto createOrderWithOptimisticLock(OrderRequestDto requestDto) {
+        // 1. 음료 주문하기
+        BeverageDto beverage = beverageService.getBeverage(requestDto.getBeverageId());
+        Order order = orderRepository.save(new Order(requestDto, beverage));
+        // 2. order 로그 남기기
+        userService.payForOrderWithOptimisticLock(requestDto.getUserId(), order.getBeveragePrice());
+        // 3. 포인트 반영 및 로그 남기기
+        pointService.savePaymentLog(requestDto.getUserId(), beverage);
+        // 4. 응답 리턴하기
         return order.toResponseDto();
     }
 }
