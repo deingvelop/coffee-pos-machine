@@ -18,7 +18,7 @@ public class OrderController {
 
     @PostMapping
     @Operation(summary = "음료 주문하기", description = "포인트로 음료를 주문합니다.")
-    public ResponseEntity<?> createOrder(@RequestBody OrderRequestDto requestDto) {
+    public ResponseEntity<OrderResponseDto> createOrder(@RequestBody OrderRequestDto requestDto) {
         return ResponseEntity.ok().body(orderService.createOrder(requestDto));
     }
 }

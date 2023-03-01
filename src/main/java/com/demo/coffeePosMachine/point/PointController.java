@@ -18,7 +18,7 @@ public class PointController {
 
     @PostMapping
     @Operation(summary = "포인트 충전하기", description = "사용자의 포인트를 충전합니다.")
-    public ResponseEntity<?> updatePoint(@RequestBody PointRequestDto requestDto) {
+    public ResponseEntity<PointResponseDto> updatePoint(@RequestBody PointRequestDto requestDto) {
         return ResponseEntity.ok().body(pointService.updatePoint(requestDto));
     }
 }
