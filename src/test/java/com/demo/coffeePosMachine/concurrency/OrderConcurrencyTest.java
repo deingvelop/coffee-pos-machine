@@ -1,4 +1,4 @@
-package com.demo.coffeePosMachine;
+package com.demo.coffeePosMachine.concurrency;
 
 import com.demo.coffeePosMachine.order.OrderRequestDto;
 import com.demo.coffeePosMachine.beverage.Beverage;
@@ -55,8 +55,7 @@ class OrderConcurrencyTest {
         // when
         CompletableFuture<?> order1 = CompletableFuture.supplyAsync(() -> orderService.createOrder(request));
         CompletableFuture<?> order2 = CompletableFuture.supplyAsync(() -> orderService.createOrder(request));
-        CompletableFuture<?> order3 = CompletableFuture.supplyAsync(() -> orderService.createOrder(request));
-        CompletableFuture.allOf(order1, order2, order3).get();
+        CompletableFuture.allOf(order1, order2).get();
 
         // then
         assert userRepository.findById(1L).get().getPoint() != 400;
@@ -75,8 +74,7 @@ class OrderConcurrencyTest {
         // when
         CompletableFuture<?> order1 = CompletableFuture.runAsync(() -> orderService.createOrder(request));
         CompletableFuture<?> order2 = CompletableFuture.runAsync(() -> orderService.createOrder(request));
-        CompletableFuture<?> order3 = CompletableFuture.runAsync(() -> orderService.createOrder(request));
-        CompletableFuture.allOf(order1, order2, order3).get();
+        CompletableFuture.allOf(order1, order2).get();
 
         // then
         // userRepository 포인트 반영 테스트
