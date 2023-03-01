@@ -1,13 +1,13 @@
 package com.demo.coffeePosMachine.concurrency;
 
-import com.demo.coffeePosMachine.order.OrderRequestDto;
 import com.demo.coffeePosMachine.beverage.Beverage;
-import com.demo.coffeePosMachine.point.PointLogRepository;
-import com.demo.coffeePosMachine.user.User;
 import com.demo.coffeePosMachine.beverage.BeverageRepository;
 import com.demo.coffeePosMachine.order.OrderRepository;
-import com.demo.coffeePosMachine.user.UserRepository;
+import com.demo.coffeePosMachine.order.OrderRequestDto;
 import com.demo.coffeePosMachine.order.OrderService;
+import com.demo.coffeePosMachine.point.PointLogRepository;
+import com.demo.coffeePosMachine.user.User;
+import com.demo.coffeePosMachine.user.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,8 +17,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -47,7 +45,7 @@ class OrderConcurrencyTest {
     }
 
     @Test
-    @DisplayName("동시에_주문할_경우_적용_안됨_테스트")
+    @DisplayName("동시에_주문할_경우_적용_안됨_supplyAsync_테스트")
     void orderConcurrencyTest_supplyAsync() throws ExecutionException, InterruptedException {
         // given
         OrderRequestDto request = new OrderRequestDto(1L, 1L);
@@ -58,15 +56,14 @@ class OrderConcurrencyTest {
         CompletableFuture.allOf(order1, order2).get();
 
         // then
+        // userRepository 포인트 반영 테스트 (통과되면 반영 안 되는 것)
         assert userRepository.findById(1L).get().getPoint() != 400;
         assert userRepository.findById(1L).get().getPoint() == 5200;
 
-        assertThat(pointLogRepository.findById(1L).get()).isNotNull();
-        assertThat(pointLogRepository.findById(2L).get()).isNull();
     }
 
     @Test
-    @DisplayName("동시에_주문할_경우_적용_안됨_테스트")
+    @DisplayName("동시에_주문할_경우_적용_안됨_runAsync_테스트")
     void orderConcurrencyTest_runAsync() throws ExecutionException, InterruptedException {
         // given
         OrderRequestDto request = new OrderRequestDto(1L, 1L);
@@ -77,13 +74,26 @@ class OrderConcurrencyTest {
         CompletableFuture.allOf(order1, order2).get();
 
         // then
-        // userRepository 포인트 반영 테스트
+        // userRepository 포인트 반영 테스트 (통과되면 반영 안 되는 것)
         assert userRepository.findById(1L).get().getPoint() != 400;
         assert userRepository.findById(1L).get().getPoint() == 5200;
 
-        // pointLogRepository 포인트 로그 쌓이는지 테스트
-        assert pointLogRepository.findAll().size() != 2;
-        assert pointLogRepository.findAll().size() == 1;
+    }
+
+    @Test
+    @DisplayName("동시에_주문할_경우_포인트로그_테스트")
+    void pointLogConcurrencyTest() throws ExecutionException, InterruptedException {
+        // given
+        OrderRequestDto request = new OrderRequestDto(1L, 1L);
+
+        // when
+        CompletableFuture<?> order1 = CompletableFuture.supplyAsync(() -> orderService.createOrder(request));
+        CompletableFuture<?> order2 = CompletableFuture.supplyAsync(() -> orderService.createOrder(request));
+        CompletableFuture.allOf(order1, order2).get();
+
+        // then
+        // pointLogRepository 포인트 로그가 쌓이면 제대로 쌓이면 통과 - INSERT라 동시성 안 발생???
+        assert pointLogRepository.findAll().size() == 2;
     }
 
 }
