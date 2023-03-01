@@ -92,8 +92,10 @@ class OrderConcurrencyTest {
         CompletableFuture.allOf(order1, order2).get();
 
         // then
-        // pointLogRepository 포인트 로그가 쌓이면 제대로 쌓이면 통과 - INSERT라 동시성 안 발생???
-        assert pointLogRepository.findAll().size() == 2;
+        // pointLogRepository 포인트 로그 쌓임 테스트
+        assert pointLogRepository.findAll().size() == 2;  // 통과됨
+//        assert pointLogRepository.findAll().size() != 2;    // 실패함. 즉, 동시성 이슈 발생해도 메서드는 제대로 실행이 되어서, 로그는 insert로 제대로 쌓임
+
     }
 
 }
