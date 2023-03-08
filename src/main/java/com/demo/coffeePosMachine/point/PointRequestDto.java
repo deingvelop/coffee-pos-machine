@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import javax.validation.constraints.Min;
+
 @Getter
 @AllArgsConstructor
 @Schema(description = "포인트 충전 요청 DTO")
@@ -13,5 +15,6 @@ public class PointRequestDto {
     private Long userId;
 
     @Schema(description = "충전할 포인트 값")
+    @Min(0L)
     private Long point;
 }
