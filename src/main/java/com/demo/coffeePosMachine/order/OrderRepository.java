@@ -1,7 +1,6 @@
 package com.demo.coffeePosMachine.order;
 
-import com.demo.coffeePosMachine.beverage.FavoriteBeverageDto;
-import com.demo.coffeePosMachine.order.Order;
+import com.demo.coffeePosMachine.beverage.PopularBeverageDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -16,6 +15,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "ORDER BY count(*) desc " +
             "LIMIT 3;",
             nativeQuery = true)
-    List<FavoriteBeverageDto> findFavorites();
+    List<PopularBeverageDto> findFavorites();
 
 }

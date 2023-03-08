@@ -1,6 +1,5 @@
 package com.demo.coffeePosMachine.beverage;
 
-import com.demo.coffeePosMachine.beverage.*;
 import com.demo.coffeePosMachine.exception.BusinessException;
 import com.demo.coffeePosMachine.order.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +26,7 @@ public class BeverageServiceImpl implements BeverageService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<FavoriteBeverageDto> showFavoriteBeverages() {
+    public List<PopularBeverageDto> showPopularBeverages() {
         return orderRepository.findFavorites();
     }
 
