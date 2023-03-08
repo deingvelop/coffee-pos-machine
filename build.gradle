@@ -34,6 +34,8 @@ dependencies {
     // Swagger 관련 설정 - https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi
     implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.9'
 
+    // Redis 설정
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
     // kafka 관련 설정
     implementation 'org.springframework.kafka:spring-kafka'
