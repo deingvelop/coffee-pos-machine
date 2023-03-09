@@ -10,7 +10,6 @@ public interface BeverageService {
 
 //    List<PopularBeverageResponseDto> showPopularBeveragesWithCache();
 
-
     List<PopularBeverage> showPopularBeveragesWithCache();
 
     BeverageDto getBeverage(Long beverageId);

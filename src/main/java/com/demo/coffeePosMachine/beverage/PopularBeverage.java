@@ -2,15 +2,18 @@ package com.demo.coffeePosMachine.beverage;
 
 import lombok.Getter;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.index.Indexed;
 
 import javax.persistence.Id;
 import java.time.LocalDate;
 
 @Getter
-@RedisHash(value = "PopularBeverage", timeToLive = 60 * 60 * 24)
+//@RedisHash(value = "PopularBeverage", timeToLive = 60 * 60 * 24)
+@RedisHash(value = "popularBeverage")
 public class PopularBeverage {
     @Id
     private Long id;
+
     private Long beverageId;
 
     private String beverageName;
@@ -19,7 +22,8 @@ public class PopularBeverage {
 
     private Long count;
 
-    LocalDate cachedDate;
+    @Indexed
+    private LocalDate cachedDate;
 
     public PopularBeverage(PopularBeverageDto dto) {
        beverageId = dto.getBeverage_id();
@@ -29,11 +33,4 @@ public class PopularBeverage {
        cachedDate = LocalDate.now();
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
 }

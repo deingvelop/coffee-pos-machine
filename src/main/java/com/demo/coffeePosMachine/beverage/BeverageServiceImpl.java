@@ -7,6 +7,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,6 +18,7 @@ import static com.demo.coffeePosMachine.exception.ErrorCode.BEVERAGE_NOT_FOUND;
 public class BeverageServiceImpl implements BeverageService {
     private final BeverageRepository beverageRepository;
     private final OrderRepository orderRepository;
+    private final PopularBeverageRepository popularBeverageRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -33,9 +35,9 @@ public class BeverageServiceImpl implements BeverageService {
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(value = "popularBeverage", cacheManager = "cacheManager")
+    @Cacheable(value = "popularBeverage", key = "cacued#", cacheManager = "cacheManager")
     public List<PopularBeverage> showPopularBeveragesWithCache() {
-        return orderRepository.findPopularsWithCache();
+        return popularBeverageRepository.findPopularBeverageByCachedDate(LocalDate.now());
     }
 
 //    @Override
