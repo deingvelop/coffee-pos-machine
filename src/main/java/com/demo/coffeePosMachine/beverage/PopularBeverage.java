@@ -1,32 +1,43 @@
 package com.demo.coffeePosMachine.beverage;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.Getter;
+import org.springframework.data.redis.core.RedisHash;
 
-import javax.persistence.Table;
-import java.io.Serializable;
+import javax.persistence.Id;
 import java.time.LocalDate;
 
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
-@Table(name = "popularBeverage")
-public class PopularBeverage implements Serializable {
-    Long beverageId;
+@RedisHash(value = "PopularBeverage", timeToLive = 60 * 60 * 24)
+public class PopularBeverage {
+    @Id
+    private Long id;
+    private Long beverageId;
 
-    String beverageName;
+    private String beverageName;
 
-    int beveragePrice;
+    private int beveragePrice;
 
-    Long count;
+    private Long count;
 
-    @CreationTimestamp
-    LocalDate cachedDate = LocalDate.now();
+    LocalDate cachedDate;
 
     public PopularBeverageResponseDto toDto() {
         return new PopularBeverageResponseDto(beverageId, beverageName, beveragePrice, count, cachedDate);
+    }
+
+    public PopularBeverage(PopularBeverageDto dto) {
+       beverageId = dto.getBeverage_id();
+       beverageName = dto.getBeverage_name();
+       beveragePrice = dto.getBeverage_price();
+       count = dto.getCount();
+       cachedDate = LocalDate.now();
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

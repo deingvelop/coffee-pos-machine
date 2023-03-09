@@ -29,18 +29,18 @@ public class BeverageServiceImpl implements BeverageService {
     @Transactional(readOnly = true)
     @Cacheable(value = "PopularBeverageDto", key = "#cached_date", cacheManager = "cacheManager")
     public List<PopularBeverageDto> showPopularBeverages() {
-        return orderRepository.findFavorites();
+        return orderRepository.findPopulars();
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    @Cacheable(value = "popularBeverage", key = "#cached_date", cacheManager = "cacheManager")
-    public List<PopularBeverageResponseDto> showPopularBeveragesWithCache() {
-        return orderRepository.findFavoritesWithCache()
-                .stream()
-                .map(PopularBeverage::toDto)
-                .collect(Collectors.toList());
-    }
+//    @Override
+//    @Transactional(readOnly = true)
+//    @Cacheable(value = "popularBeverage", key = "#cached_date", cacheManager = "cacheManager")
+//    public List<PopularBeverageResponseDto> showPopularBeveragesWithCache() {
+//        return orderRepository.findPopularsWithCache()
+//                .stream()
+//                .map(PopularBeverage::toDto)
+//                .collect(Collectors.toList());
+//    }
 
     @Override
     public BeverageDto getBeverage(Long beverageId) {
