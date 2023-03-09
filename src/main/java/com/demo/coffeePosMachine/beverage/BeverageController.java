@@ -3,7 +3,9 @@ package com.demo.coffeePosMachine.beverage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,9 +31,11 @@ public class BeverageController {
         return ResponseEntity.ok().body(beverageService.showPopularBeverages());
     }
 
-//    @GetMapping("/popular-new")
-//    @Operation(summary = "인기 메뉴 캐싱하여 조회하기", description = "최근 일주일간 인기있는 메뉴 3개를 조회합니다.")
-//    public ResponseEntity<List<PopularBeverageResponseDto>> showFavoriteBevaragesWithCache() {
-//        return ResponseEntity.ok().body(beverageService.showPopularBeveragesWithCache());
-//    }
+    @GetMapping("/popular-new")
+    @Operation(summary = "인기 메뉴 캐싱하여 조회하기", description = "최근 일주일간 인기있는 메뉴 3개를 조회합니다.")
+    @Transactional(readOnly = true)
+    @Cacheable(value = "popularBeverage", cacheManager = "cacheManager")
+    public ResponseEntity<List<PopularBeverage>> showFavoriteBevaragesWithCache() {
+        return ResponseEntity.ok().body(beverageService.showPopularBeveragesWithCache());
+    }
 }

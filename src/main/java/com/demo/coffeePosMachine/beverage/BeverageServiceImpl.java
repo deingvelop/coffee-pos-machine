@@ -27,9 +27,15 @@ public class BeverageServiceImpl implements BeverageService {
 
     @Override
     @Transactional(readOnly = true)
-    @Cacheable(value = "PopularBeverageDto", key = "#cached_date", cacheManager = "cacheManager")
     public List<PopularBeverageDto> showPopularBeverages() {
         return orderRepository.findPopulars();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    @Cacheable(value = "popularBeverage", cacheManager = "cacheManager")
+    public List<PopularBeverage> showPopularBeveragesWithCache() {
+        return orderRepository.findPopularsWithCache();
     }
 
 //    @Override

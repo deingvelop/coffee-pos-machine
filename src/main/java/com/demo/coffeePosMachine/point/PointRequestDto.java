@@ -1,11 +1,11 @@
 package com.demo.coffeePosMachine.point;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import javax.validation.constraints.Min;
+
 @Getter
-@AllArgsConstructor
 @Schema(description = "포인트 충전 요청 DTO")
 public class PointRequestDto {
 
@@ -13,5 +13,6 @@ public class PointRequestDto {
     private Long userId;
 
     @Schema(description = "충전할 포인트 값")
+    @Min(0L)    // 이 객체의 validation
     private Long point;
 }

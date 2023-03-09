@@ -21,10 +21,6 @@ public class PopularBeverage {
 
     LocalDate cachedDate;
 
-    public PopularBeverageResponseDto toDto() {
-        return new PopularBeverageResponseDto(beverageId, beverageName, beveragePrice, count, cachedDate);
-    }
-
     public PopularBeverage(PopularBeverageDto dto) {
        beverageId = dto.getBeverage_id();
        beverageName = dto.getBeverage_name();

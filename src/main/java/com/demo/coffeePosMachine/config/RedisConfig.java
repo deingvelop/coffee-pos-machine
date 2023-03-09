@@ -20,8 +20,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-        LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory();
-        return lettuceConnectionFactory;
+        return new LettuceConnectionFactory();
     }
 
     @Override
