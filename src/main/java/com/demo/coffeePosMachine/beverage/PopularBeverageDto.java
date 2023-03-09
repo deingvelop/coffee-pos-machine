@@ -2,8 +2,12 @@ package com.demo.coffeePosMachine.beverage;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.io.Serializable;
+import java.time.LocalDate;
+
+
 @Schema(description = "인기 음료 DTO")
-public interface PopularBeverageDto {
+public interface PopularBeverageDto extends Serializable {
 
     @Schema(description = "음료 식별값(ID)")
     Long getBeverage_id();
@@ -16,4 +20,6 @@ public interface PopularBeverageDto {
 
     @Schema(description = "7일간 음료 주문 횟수")
     Long getCount();
+
+    LocalDate cachedDate = LocalDate.now();
 }

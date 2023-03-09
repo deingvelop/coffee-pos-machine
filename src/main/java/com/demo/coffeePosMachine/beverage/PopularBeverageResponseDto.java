@@ -5,16 +5,14 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Table;
-import java.io.Serializable;
 import java.time.LocalDate;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
+@AllArgsConstructor
 @Table(name = "popularBeverage")
-public class PopularBeverage implements Serializable {
+public class PopularBeverageResponseDto {
     Long beverageId;
 
     String beverageName;
@@ -25,8 +23,4 @@ public class PopularBeverage implements Serializable {
 
     @CreationTimestamp
     LocalDate cachedDate = LocalDate.now();
-
-    public PopularBeverageResponseDto toDto() {
-        return new PopularBeverageResponseDto(beverageId, beverageName, beveragePrice, count, cachedDate);
-    }
 }

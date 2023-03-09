@@ -3,6 +3,7 @@ package com.demo.coffeePosMachine.beverage;
 import com.demo.coffeePosMachine.exception.BusinessException;
 import com.demo.coffeePosMachine.order.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,8 +27,19 @@ public class BeverageServiceImpl implements BeverageService {
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(value = "PopularBeverageDto", key = "#cached_date", cacheManager = "cacheManager")
     public List<PopularBeverageDto> showPopularBeverages() {
         return orderRepository.findFavorites();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    @Cacheable(value = "popularBeverage", key = "#cached_date", cacheManager = "cacheManager")
+    public List<PopularBeverageResponseDto> showPopularBeveragesWithCache() {
+        return orderRepository.findFavoritesWithCache()
+                .stream()
+                .map(PopularBeverage::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
