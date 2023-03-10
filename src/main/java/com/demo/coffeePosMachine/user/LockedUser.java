@@ -21,6 +21,7 @@ public class LockedUser {
 
     @Version
     private Long version;
+    // 동시성 제어에 대해 좀 더 개념 견고하게
 
     // Constructor
     public LockedUser(Long id, Long point) {
