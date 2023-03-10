@@ -1,5 +1,6 @@
 package com.demo.coffeePosMachine.order;
 
+import com.demo.coffeePosMachine.aop.SendOrderLog;
 import com.demo.coffeePosMachine.beverage.BeverageDto;
 import com.demo.coffeePosMachine.beverage.BeverageService;
 import com.demo.coffeePosMachine.point.PointService;
@@ -18,6 +19,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
+    @SendOrderLog
     public OrderResponseDto createOrder(OrderRequestDto requestDto) {
         // 1. 음료 주문하기
         BeverageDto beverage = beverageService.getBeverage(requestDto.getBeverageId());
