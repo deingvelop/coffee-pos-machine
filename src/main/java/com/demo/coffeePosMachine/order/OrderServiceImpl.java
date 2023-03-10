@@ -23,7 +23,7 @@ public class OrderServiceImpl implements OrderService {
         BeverageDto beverage = beverageService.getBeverage(requestDto.getBeverageId());
         Order order = orderRepository.save(new Order(requestDto, beverage));
         // 2. order 로그 남기기
-        userService.payForOrder(requestDto.getUserId(), order.getBeveragePrice(), beverage);
+        userService.payForOrder(requestDto.getUserId(), beverage);
         // 3. 응답 리턴하기
         return order.toResponseDto();
     }
