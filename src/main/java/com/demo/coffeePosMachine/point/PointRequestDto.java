@@ -15,6 +15,6 @@ public class PointRequestDto {
     private Long userId;
 
     @Schema(description = "충전할 포인트 값")
-    @Min(0L)
+    @Min(0L)    // 이 객체의 validation
     private Long point;
 }
