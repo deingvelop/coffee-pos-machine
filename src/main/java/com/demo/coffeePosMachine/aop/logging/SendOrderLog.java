@@ -1,4 +1,4 @@
-package com.demo.coffeePosMachine.aop;
+package com.demo.coffeePosMachine.aop.logging;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

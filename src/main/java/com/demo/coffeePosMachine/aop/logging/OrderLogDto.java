@@ -1,4 +1,4 @@
-package com.demo.coffeePosMachine.aop;
+package com.demo.coffeePosMachine.aop.logging;
 
 import com.demo.coffeePosMachine.order.OrderResponseDto;
 
