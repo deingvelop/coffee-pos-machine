@@ -63,7 +63,7 @@ class OrderConcurrencyTest {
     }
 
     @Test
-    @DisplayName("동시에_주문할_경우_적용_안됨_runAsync_테스트")
+    @DisplayName("동시에_주문할_경우_테스트")
     void orderConcurrencyTest_runAsync() throws ExecutionException, InterruptedException {
         // given
         OrderRequestDto request = new OrderRequestDto(1L, 1L);

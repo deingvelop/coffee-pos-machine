@@ -1,4 +1,4 @@
-package com.demo.coffeePosMachine.aop;
+package com.demo.coffeePosMachine.aop.logging;
 
 import com.demo.coffeePosMachine.exception.BusinessException;
 import com.demo.coffeePosMachine.exception.ErrorCode;
@@ -23,7 +23,7 @@ public class LogAspect {
 
 //    ListenableFuture<SendResult<String, OrderResponseDto>> future = orderKafkaTemplate.send(empTopicName, OrderResponseDto);
 
-    @AfterReturning(value = "@annotation(com.demo.coffeePosMachine.aop.SendOrderLog)", returning = "result")
+    @AfterReturning(value = "@annotation(com.demo.coffeePosMachine.aop.logging.SendOrderLog)", returning = "result")
     public void sendSuccessLog(JoinPoint joinPoint, Object result) throws RuntimeException {
 
         OrderLogDto orderLog = new OrderLogDto((OrderResponseDto) result);
@@ -32,7 +32,7 @@ public class LogAspect {
         this.orderKafkaTemplate.send(TOPIC, orderLog.toString());
     }
 
-    @AfterThrowing(value = "@annotation(com.demo.coffeePosMachine.aop.SendOrderLog)", throwing = "exception")
+    @AfterThrowing(value = "@annotation(com.demo.coffeePosMachine.aop.logging.SendOrderLog)", throwing = "exception")
     public void sendErrorLog(JoinPoint joinPoint, Exception exception) throws RuntimeException {
         ErrorCode e = ((BusinessException) exception).getErrorCode();
         String errorInfo = "OrderException{" +
