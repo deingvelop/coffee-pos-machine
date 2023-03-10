@@ -1,13 +1,11 @@
 package com.demo.coffeePosMachine.point;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.validation.constraints.Min;
 
 @Getter
-@AllArgsConstructor
 @Schema(description = "포인트 충전 요청 DTO")
 public class PointRequestDto {
 

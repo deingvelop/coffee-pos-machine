@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -21,7 +22,7 @@ import java.util.concurrent.ExecutionException;
 @ActiveProfiles("test")
 @SpringBootTest
 //@DataJpaTest
-//@Transactional
+@Transactional
 class OrderConcurrencyTest {
     @Autowired
     private OrderService orderService;
@@ -51,14 +52,13 @@ class OrderConcurrencyTest {
         OrderRequestDto request = new OrderRequestDto(1L, 1L);
 
         // when
-        CompletableFuture<?> order1 = CompletableFuture.supplyAsync(() -> orderService.createOrder(request));
+        CompletableFuture<?> order1 = CompletableFuture.supplyAsync(() -> orderService.createOrder(request));   // 트랜잭션은 스레드에 종속적임. 따라서 다른 트랜잭션이 열림
         CompletableFuture<?> order2 = CompletableFuture.supplyAsync(() -> orderService.createOrder(request));
         CompletableFuture.allOf(order1, order2).get();
 
         // then
         // userRepository 포인트 반영 테스트 (통과되면 반영 안 되는 것)
-        assert userRepository.findById(1L).get().getPoint() != 400;
-        assert userRepository.findById(1L).get().getPoint() == 5200;
+        assert userRepository.findById(1L).get().getPoint() == 400;     // 이게 필요함
 
     }
 

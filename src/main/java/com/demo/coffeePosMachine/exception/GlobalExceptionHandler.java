@@ -29,6 +29,9 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.valueOf(errorCode.getStatus()));
     }
 
+    // exception 단위로 에러 응답 받을 수 있게
+    // 이 exception
+
     // ---------------------------------------------------------------------------------------------------------------
 
     /**

@@ -2,8 +2,9 @@ package com.demo.coffeePosMachine.beverage;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+
 @Schema(description = "인기 음료 DTO")
-public interface FavoriteBeverageDto {
+public interface PopularBeverageDto {
 
     @Schema(description = "음료 식별값(ID)")
     Long getBeverage_id();
@@ -16,4 +17,5 @@ public interface FavoriteBeverageDto {
 
     @Schema(description = "7일간 음료 주문 횟수")
     Long getCount();
+
 }

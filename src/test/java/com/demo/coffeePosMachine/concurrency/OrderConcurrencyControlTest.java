@@ -64,7 +64,8 @@ class OrderConcurrencyControlTest {
         }
 
         // then
-        assert result instanceof OptimisticLockingFailureException;
+        assert result instanceof OptimisticLockingFailureException; // optimistic lock을 재처리하는 로직이 있어야 함 - (로직 작성 까다로워질 수 있음. 롤백 처리도 생각해야..!). 혹은, pessimistic lock을 적용하는 것도 맞음.
+        // 비관적 락 통해서 한 번 걸어보고, 레디스를 통해서도 걸어보기 (락만을 위해서는 띄우지는 않지만, 보통 다 띄우기 때문에....)
     }
 
 }
