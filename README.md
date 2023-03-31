@@ -73,7 +73,7 @@ CREATE TABLE `point_log` (
     PRIMARY KEY(`id`)
 );
 
-CREATE TABLE `orderLog` (
+CREATE TABLE `order` (
     `id` BIGINT(20) NOT NULL auto_increment,
     `created_at` DATETIME NOT NULL,
     `user_id` BIGINT(20) NOT NULL,
@@ -84,18 +84,3 @@ CREATE TABLE `orderLog` (
 ```
 
 </details>
-
-
-
-<br />
-
-## ✨ 기술적인 도전
-
-1. Kafka로 로그 데이터 전송하기 (+ ELK-stack)
-2. JPA 및 Redis로 동시성 제어
-3. 대용량 트래픽 관련 도전
-    - Nginx로 로드 밸런싱
-4. 캐싱으로 성능 향상시키기
-    - Redis로 일주일간 데이터 캐싱?
-  
-<br />
