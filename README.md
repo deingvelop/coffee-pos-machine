@@ -13,6 +13,14 @@
 
 ### Swagger : [coffee-pos-machine](https://app.swaggerhub.com/apis-docs/deingvelop/coffee-pos-machine/1.0.0#/default/get_beverages_favorites)
 
+<br />
+
+## ✍🏻 도전 과제
+- 동시성 관련 테스트코드 작성 및 DB Lock을 활용한 동시성 제어
+- Swagger를 활용한 API Documentation
+- Redis 캐싱을 활용하여 인기 메뉴 조회 성능 최적화
+- Redis 분산 락을 활용하여 동시성 제어
+- Kafka를 활용하여 별도의 데이터 수집 플랫폼으로 로그를 보내는 로직 작성
 
 
 <br />
